@@ -29,10 +29,10 @@ const wordGenerator = async () => {
 
 const main = async() => {
     // Set the time to run the job (9am EST)
-    const jobTime = '38 14 * * *';
+    const jobTime = '0 9 * * *';
 
     // Create a job that runs at the specified time
-    //const job = schedule.scheduleJob(jobTime, async function() {
+    const job = schedule.scheduleJob(jobTime, async function() {
         const noun = await wordGenerator();
         // Make an API call to ChatGPT to generate a short story based on the noun
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
@@ -58,7 +58,7 @@ const main = async() => {
         const story = response.data.choices[0].message.content;
 
         sendPrompt(`Today's word is: ${noun}`, story)
-    //});
+    });
 }
 
 module.exports = {
