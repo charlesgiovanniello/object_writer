@@ -29,10 +29,14 @@ const wordGenerator = async () => {
 
 const main = async() => {
     // Set the time to run the job (9am EST)
-    const jobTime = '33 9 * * *';
+    const rule = new schedule.RecurrenceRule();
+    rule.tz = 'America/New_York';
+    rule.hour = 9;
+    rule.minute = 45;
+    rule.second = 0;
 
     // Create a job that runs at the specified time
-    const job = schedule.scheduleJob(jobTime, async function() {
+    const job = schedule.scheduleJob(rule, async function() {
         const noun = await wordGenerator();
         // Make an API call to ChatGPT to generate a short story based on the noun
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
