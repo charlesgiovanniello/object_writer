@@ -29,7 +29,7 @@ const wordGenerator = async () => {
 
 const main = async() => {
     // Set the time to run the job (9am EST)
-    const jobTime = '0 9 * * *';
+    const jobTime = '33 9 * * *';
 
     // Create a job that runs at the specified time
     const job = schedule.scheduleJob(jobTime, async function() {

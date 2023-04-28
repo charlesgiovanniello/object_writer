@@ -15,7 +15,7 @@ async function postTweet(text) {
   }
 async function replyToTweet(tweetId, text, pos=0) {
     if (pos >= text.length){
-        return;
+        return tweetId;
     }
     else{
         const reply = await client.v2.reply(
@@ -27,7 +27,12 @@ async function replyToTweet(tweetId, text, pos=0) {
 }
 const sendPrompt = async (prompt, exampleResponse) =>{
     const tweet = await postTweet(prompt);
-    await replyToTweet(tweet.data.id, exampleResponse);
+    const lastReply = await replyToTweet(tweet.data.id, exampleResponse);
+    //Add hashtags
+    await client.v2.reply(
+        "#ObjectWriting #CreativeWriting #Poetry #Lyrics",
+        lastReply.data.id,
+        );
     console.log(`Tweet sent! Word: ${prompt}, Example: ${exampleResponse}`)
 }
 module.exports={
