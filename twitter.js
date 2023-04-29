@@ -14,6 +14,7 @@ async function postTweet(text) {
     return tweet;
   }
 async function replyToTweet(tweetId, text, pos=0) {
+    var returnMe = ""
     if (pos >= text.length){
         return tweetId;
     }
@@ -22,8 +23,9 @@ async function replyToTweet(tweetId, text, pos=0) {
             text.slice(pos,pos+280),
             tweetId,
             );
-        await replyToTweet(reply.data.id,text,pos+280);
+        returnMe = await replyToTweet(reply.data.id,text,pos+280);
     }
+    return returnMe;
 }
 const sendPrompt = async (prompt, exampleResponse) =>{
     const tweet = await postTweet(prompt);
@@ -31,7 +33,7 @@ const sendPrompt = async (prompt, exampleResponse) =>{
     //Add hashtags
     await client.v2.reply(
         "#ObjectWriting #CreativeWriting #Poetry #Lyrics",
-        lastReply.data.id,
+        lastReply,
         );
     console.log(`Tweet sent! Word: ${prompt}, Example: ${exampleResponse}`)
 }
