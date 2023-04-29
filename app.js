@@ -36,31 +36,31 @@ const wordGenerator = async () => {
 
     //Method 3, webscrape the objectwriting.com website
 
-    (async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-    
-        // Navigate to the website
-        await page.goto('https://objectwriting.com/');
-        //await page.waitForNavigation({ waitUntil: 'networkidle0' });
-    
-        // Get the text within the <p> tag using its full XPath
-        const xpath = '/html/body/div/div[2]/div/main/article/div/div[1]/div[1]/table/tbody/tr/td/h1';
-        const element = await page.$x(xpath);
-        const text = await page.evaluate(el => el.textContent.trim(), element[0]);
-    
-        console.log(text);
-    
-        await browser.close();
-    })();
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    // Navigate to the website
+    await page.goto('https://objectwriting.com/');
+    //await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+    // Get the text within the <p> tag using its full XPath
+    const xpath = '/html/body/div/div[2]/div/main/article/div/div[1]/div[1]/table/tbody/tr/td/h1';
+    const element = await page.$x(xpath);
+    const text = await page.evaluate(el => el.textContent.trim(), element[0]);
+
+    console.log(text);
+
+    await browser.close();
+
+    return text
 }
 
 const main = async() => {
     // Set the time to run the job (9am EST)
     const rule = new schedule.RecurrenceRule();
     rule.tz = 'America/New_York';
-    rule.hour = 8;
-    rule.minute = 55;
+    rule.hour = 9;
+    rule.minute = 0;
     rule.second = 0;
 
     // Create a job that runs at the specified time
