@@ -59,7 +59,7 @@ const main = async() => {
     // Set the time to run the job (9am EST)
     const rule = new schedule.RecurrenceRule();
     rule.tz = 'America/New_York';
-    rule.hour = 9;
+    rule.hour = 6;
     rule.minute = 0;
     rule.second = 0;
 
