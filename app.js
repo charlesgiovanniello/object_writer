@@ -36,7 +36,15 @@ const wordGenerator = async () => {
 
     //Method 3, webscrape the objectwriting.com website
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless:true
+        ,
+        args: [
+            '--no-sandbox',
+            '--disable-dev-shm-usage', // <-- add this one
+            '--disable-setuid-sandbox',
+            ],
+    })
     const page = await browser.newPage();
 
     // Navigate to the website
@@ -60,7 +68,7 @@ const main = async() => {
     const rule = new schedule.RecurrenceRule();
     rule.tz = 'America/New_York';
     rule.hour = 6;
-    rule.minute = 0;
+    rule.minute = 40;
     rule.second = 0;
 
     // Create a job that runs at the specified time
